@@ -1,12 +1,14 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Select } from 'primeng/select';
 import {ToastModule} from "primeng/toast";
 import {MessageService} from "primeng/api";
 import {ButtonModule} from "primeng/button";
 import { FileUpload } from 'primeng/fileupload';
 import {UploadFileComponent}from '../../shared/component/upload-file/upload-file.component'
+import {InputNumber} from 'primeng/inputnumber';
+import { TextareaModule } from 'primeng/textarea';
 
 interface UploadEvent {
   originalEvent: Event;
@@ -21,7 +23,9 @@ interface UploadEvent {
     ToastModule,
     ButtonModule,
     FileUpload,
-    UploadFileComponent
+    UploadFileComponent,
+    InputNumber,
+    TextareaModule
   ],
   templateUrl: './secretary.component.html',
   styleUrl: './secretary.component.css',
@@ -36,6 +40,10 @@ export class SecretaryComponent implements OnInit {
   ngOnInit(): void {
     this.formInit();
     this.infoInit();
+    this.form = new FormGroup({
+      value: new FormControl(),
+      text: new FormControl<string | null>(null)
+  });
   } 
 
   formInit() {
