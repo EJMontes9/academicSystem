@@ -2,18 +2,26 @@ import { NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Select } from 'primeng/select';
-import {Toast} from "primeng/toast";
+import {ToastModule} from "primeng/toast";
 import {MessageService} from "primeng/api";
-import {Button} from "primeng/button";
+import {ButtonModule} from "primeng/button";
+import { FileUpload } from 'primeng/fileupload';
+import {UploadFileComponent}from '../../shared/component/upload-file/upload-file.component'
 
+interface UploadEvent {
+  originalEvent: Event;
+  files: File[];
+}
 
 @Component({
   selector: 'app-secretary',
   imports: [
     ReactiveFormsModule,
     Select,
-    Toast,
-    Button
+    ToastModule,
+    ButtonModule,
+    FileUpload,
+    UploadFileComponent
   ],
   templateUrl: './secretary.component.html',
   styleUrl: './secretary.component.css',
@@ -35,6 +43,10 @@ export class SecretaryComponent implements OnInit {
       profesor: ["",[Validators.required]]
     })
   }
+
+  onUpload(event: UploadEvent) {
+    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
+}
 
   infoInit(){
     this.profesores = [
