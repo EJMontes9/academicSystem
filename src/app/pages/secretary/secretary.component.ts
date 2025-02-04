@@ -2,22 +2,28 @@ import { NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Select } from 'primeng/select';
+import {Toast} from "primeng/toast";
+import {MessageService} from "primeng/api";
+import {Button} from "primeng/button";
 
 
 @Component({
   selector: 'app-secretary',
   imports: [
     ReactiveFormsModule,
-    Select
+    Select,
+    Toast,
+    Button
   ],
   templateUrl: './secretary.component.html',
-  styleUrl: './secretary.component.css'
+  styleUrl: './secretary.component.css',
+  providers: [MessageService]
 })
 export class SecretaryComponent implements OnInit {
   form!: FormGroup
   profesores!: any
 
-  constructor (private fb:FormBuilder){}
+  constructor (private fb:FormBuilder,private messageService: MessageService){}
 
   ngOnInit(): void {
     this.formInit();
@@ -42,7 +48,11 @@ export class SecretaryComponent implements OnInit {
 
   onSubmit(){
     if(this.form.invalid){
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Formulario Invalido' });
       return
     }
+    this.messageService.add({ severity: 'success', summary: 'Correcto', detail: 'Creado correctamente' });
   }
+
+
 }
