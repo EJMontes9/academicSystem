@@ -7,7 +7,6 @@ import { Select } from 'primeng/select';
 @Component({
   selector: 'app-secretary',
   imports: [
-    NgFor, 
     ReactiveFormsModule,
     Select
   ],
@@ -22,6 +21,7 @@ export class SecretaryComponent implements OnInit {
 
   ngOnInit(): void {
     this.formInit();
+    this.infoInit();
   } 
 
   formInit() {
