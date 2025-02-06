@@ -47,10 +47,6 @@ export class SecretaryComponent implements OnInit {
     this.formInit();
     this.obtenerEstudiante();
     this.obtenerProfesor();
-    this.form = new FormGroup({
-      value: new FormControl(),
-      text: new FormControl<string | null>(null)
-  });
   } 
 
   obtenerEstudiante(){
@@ -69,13 +65,11 @@ export class SecretaryComponent implements OnInit {
 
   formInit() {
     this.form=this.fb.group({
-      profesor: [,[Validators.required]],
-      estudiante:[,[Validators.required]],
-      documentIn:[,[Validators.required]],
-      text:[,[Validators.required]],
-      value:[,[Validators.required]],
-      
-      
+      profesor: ['',[Validators.required]],
+      estudiante:['',[Validators.required]],
+      documentIn:['',[Validators.required]],
+      text:['',[Validators.required]],
+      value:['',[Validators.required]],
     })
   }
 

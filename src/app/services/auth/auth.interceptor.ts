@@ -55,6 +55,10 @@ export class AuthInterceptor implements HttpInterceptor {
         Authorization: `Bearer ${token}`,
       },
     });
+    console.log('tockend',clonedRequest);
+      if (token) {
+          console.log('Token agregado al encabezado:', token);
+      }
     return next.handle(clonedRequest).pipe(
         catchError((error: HttpErrorResponse) => {
           // Manejar error 401 (No autorizado)
