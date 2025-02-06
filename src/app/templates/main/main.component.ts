@@ -27,7 +27,7 @@ export class MainComponent {
 
   isLargeScreen: boolean = false;
 
-  constructor() {
+  constructor(private authService:AuthService) {
     this.checkScreenSize(); // Evaluar el tamaño de pantalla al cargar el componente
   }
 
@@ -86,6 +86,7 @@ export class MainComponent {
   }
 
   logout() {
+    this.authService.logout();
     window.location.href = '/';
   }
 
