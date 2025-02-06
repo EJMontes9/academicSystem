@@ -6,6 +6,8 @@ import {provideAnimationsAsync} from "@angular/platform-browser/animations/async
 import {providePrimeNG} from "primeng/config";
 import Aura from '@primeng/themes/aura';
 import {definePreset} from "@primeng/themes";
+import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth/auth.interceptor';
 
 
 const MyPreset = definePreset(Aura, {
@@ -668,6 +670,11 @@ const MyPreset = definePreset(Aura, {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(withInterceptorsFromDi()),{
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi:true
+    },
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {

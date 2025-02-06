@@ -10,7 +10,7 @@ interface LoginRequest {
 
 interface LoginResponse {
   token: string;
-  userId: number;
+  userId?: number;
   username: string;
 }
 
@@ -20,8 +20,8 @@ interface LoginResponse {
 })
 export class AuthService {
 
-  private loginUrl = 'http://localhost:8234/auth/login';
-  private refreshTokenUrl = 'http://localhost:8234/auth/refresh-token'; // Endpoint para renovar el token
+  private loginUrl = 'http://localhost:8062/auth/login';
+  private refreshTokenUrl = 'http://localhost:8062/auth/refresh-token'; // Endpoint para renovar el token
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -31,12 +31,23 @@ export class AuthService {
         .pipe(
             map(response => {
               // Almacena el token en localStorage para autenticar futuras solicitudes
-              this.setToken(response.token);
-              localStorage.setItem('username', response.username);
-              localStorage.setItem('userId', response.userId.toString());
+              console.log("Respuesta del servidor:", response);
+
+      if (!response || !response.token || !response.username) {
+        throw new Error("La respuesta del servidor es inválida");
+      }
+
+      this.setToken(response.token);
+      localStorage.setItem('username', response.username);
+      
+      // Verifica si 'userId' existe antes de almacenarlo
+      if (response.userId !== undefined && response.userId !== null) {
+        localStorage.setItem('userId', response.userId.toString());
+      }
               return response;
             }),
             catchError(error => {
+              console.error("error en el login", error);
               // Maneja errores
               throw error;
             })

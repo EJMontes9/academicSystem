@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Route, Router } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
 
 
 @Component({
@@ -12,14 +13,18 @@ import { Route, Router } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  cedula: string=""
-  clave: string=""
+  username: string=""
+  password: string=""
 
-  constructor (private route:Router){}
+  constructor (private route:Router, private authService: AuthService){}
   login (){
-    if (this.cedula==="10"&&this.clave==="6"){
-      this.route.navigate(["secretary"])
-    }
-    else (alert ("no funciona"))
+    this.authService.login({username: this.username, password:this.password})
+    .subscribe({
+      next: (Response)=> {
+        console.log('login existoso:', Response);
+        console.log(this.authService.getToken);
+        this.route.navigate(['/secretary']); //Redirige al dashboard
+      }
+    })
   }
 }
